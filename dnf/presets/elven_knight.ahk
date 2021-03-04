@@ -17,8 +17,29 @@ SetWorkingDir ..
 
 ; ==================== Customization Begin ====================
 
-global smallSkills := [["盾挑", ["", ""], 2], ["盾击", ["Up", "z"], 3], ["盾牌格挡", ["Down", "z"], 1.8], ["致命突刺", ["Up", "Up", "z"], 3]]
-global keyJianDun := "space"
+global smallSkills := [["盾挑", [""], 2], ["盾击", ["Up", "z"], 3], ["盾牌格挡", ["Down", "z"], 1.8], ["致命突刺", ["Up", "Up", "z"], 3]]
+; 用来叠 C 的小技能, 之所以我盾挑留空是因为我下面触发键 (x & z) 中包含了 z, 所以不需要再在这里写 z 了
+
+global keyJianDun := "Space"
+; 剑盾猛攻按键
+
+global skillDelay := {"a": 225, "s": 225, "d": 225, "f": 240, "g": 740, "w": 750, "e": 740, "r": 276, "b": 740, "y": 2750}
+; 例如我 a 键是破武之轮, 希望在该技能释放后 225ms 按剑盾, 就设置 "a": 225
+; 其他技能可以参考 https://bbs.colg.cn/thread-8027274-1-1.html
+; 个人对应表
+; a - 破武之轮
+; s - 神木刺击
+; d - 破甲冲击
+; f - 自然束缚
+; g - 飓风旋枪, 带护石减500
+; w - 壁垒突袭
+; e - 天陨断空斩
+; r - 一刀两断
+; b - 自然之怒
+; y - 二觉
+
+; ==================== Customization End ====================
+
 global keycodeJianDun := GetSpecialKeycode(keyJianDun)
 
 global smallSkillsLastFired := {}
@@ -27,69 +48,19 @@ for _, v in smallSkills {
     v[3] := v[3] * 1000 + 100  ; 补正冷却时间 (s -> ms, 然后加上一点冗余量)
 }
 
+for k, v in skillDelay {
+    fn := Func("JianDunAfter").Bind(v)
+    Hotkey, $~*%k%, %fn%
+}
+
+JianDunAfter(delay) {
+    fn := Func("RobustSend").Bind(keycodeJianDun)
+    SetTimer, % fn, % -delay
+}
+
 ; 自动叠C快捷键 (此处为同时按x和z时触发)
 ~x & ~z::
     fireSmallSkills()
-    return
-
-; 破武之轮, 此技能可蓄力, 所以从松开按键算起, 若要加在连锁中, 务必快速释放!
-~a::
-    Sleep, 225
-    RobustSend(keycodeJianDun)
-    return
-
-; 神木刺击
-~s::
-    Sleep, 225
-    RobustSend(keycodeJianDun)
-    return
-
-; 破甲冲击
-~d::
-    Sleep, 225
-    RobustSend(keycodeJianDun)
-    return
-
-; 自然束缚
-~f::
-    Sleep, 240
-    RobustSend(keycodeJianDun)
-    return
-
-; 飓风旋枪, 带护石减500
-~g::
-    Sleep, 740
-    RobustSend(keycodeJianDun)
-    return
-
-; 壁垒突袭
-~w::
-    Sleep, 750
-    RobustSend(keycodeJianDun)
-    return
-
-; 天陨断空斩
-~e::
-    Sleep, 740
-    RobustSend(keycodeJianDun)
-    return
-
-; 一刀两断
-~r::
-    Sleep, 276
-    RobustSend(keycodeJianDun)
-    return
-
-; 自然之怒
-~b::
-    Sleep, 740
-    RobustSend(keycodeJianDun)
-    return
-
-; 二觉
-~y::
-    Sleep, 2750
-    RobustSend(keycodeJianDun)
     return
 
 ; ==================== Customization End ====================
@@ -105,7 +76,7 @@ fireSmallSkills() {
                 RobustSend(GetSpecialKeycode(key))
             }
             smallSkillsLastFired[skill[1]] := A_TickCount
-            Sleep, 225 - delay * 2
+            Sleep, 225 - delay * 1.5  ; 减去 2 个 delay 是因为 RobustSend 本身已经有延迟了
             RobustSend(keycodeJianDun)
             fired += 1
             usedSkills .= skill[1] . " "
