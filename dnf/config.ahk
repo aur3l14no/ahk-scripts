@@ -7,7 +7,7 @@
 global presets := { "F5": ["基本", "x,a,q"]
                   , "F6": ["力法/剑影/剑魂", "x,z,d,f,g,q,w,e,r,t,y;a"]
                   , "F7": ["DK", "x,a,s,d,f,g,e,r,t"]
-                  , "F9": ["剑鬼", "presets\ghostblade.ahk"]
-                  , "F8": ["精灵骑士", "presets\elven_knight.ahk"]}
+                  , "F8": ["精灵骑士", "presets\elven_knight.ahk"]
+                  , "F10": ["剑鬼 (测试版)", "presets\experimental\ghostblade.ahk"]}
 
 global defaultPreset = "F6"
