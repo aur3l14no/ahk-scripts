@@ -6,9 +6,9 @@
 
 ListLines, Off
 SetBatchLines, -1
-SendMode, Input
+SetKeyDelay, -1, -1
 
-global delay := 10
+global delay := 20
 
 GetSpecialKeycode(key) {
 	; 返回对应于 key 的只被游戏识别但不影响打字的 keycode
@@ -19,9 +19,9 @@ GetSpecialKeycode(key) {
 }
 
 RobustSend(key) {
-	SendInput, {%key% down}
+	Send, {%key% down}
 	Sleep, delay
-	SendInput, {%key% up}
+	Send, {%key% up}
 	Sleep, delay
 }
 
@@ -29,7 +29,7 @@ ToolTip1s(msg) {
     ; Somehow it has to hacked this way
     ToolTip, % msg, (A_ScreenWidth // 2), (A_ScreenHeight // 2)
 	fn := Func("MyToolTip").bind()
-    SetTimer % fn, -1000
+    SetTimer, % fn, -1000
 }
 
 MyToolTip() {
