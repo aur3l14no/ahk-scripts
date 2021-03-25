@@ -4,10 +4,15 @@
 ; defaultPreset: 默认开启的方案
 ; 逗号在下一行是 AHK 的蹩脚 parser 不支持常规多行声明的写法所致
 
+global duration := 25
+global delay := 5
+
 global presets := { "F5": ["基本", "x,a,q"]
-                  , "F6": ["力法/剑影/剑魂", "x,z,d,f,g,q,w,e,r,t,y;a"]
+                  , "F6": ["力法/剑影/剑魂", "x,z,f,g,q,w,e,t,y;a"]
                   , "F7": ["DK", "x,a,s,d,f,g,e,r,t"]
                   , "F8": ["精灵骑士", "presets\elven_knight.ahk"]
-                  , "F10": ["剑鬼 (测试版)", "presets\experimental\ghostblade.ahk"]}
+                ;   , "F9": ["剑魂 (PK)", "x;z;a,d,f,g,v,b,q,e,r,t"]
+                ;   , "F10": ["鹦鹉 (PK)", "x;z;a,s,d,f,g,v,b,w,e,r,t,y,tab"]
+                  , "F10": ["鼠标连点", "presets\click.ahk"]}
 
-global defaultPreset = "F6"
+global defaultPreset = "F8"

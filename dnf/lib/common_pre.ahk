@@ -4,11 +4,12 @@
 
 ; ==================== 说明结束 ====================
 
+#Include config.ahk
+#KeyHistory 0
 ListLines, Off
 SetBatchLines, -1
 SetKeyDelay, -1, -1
-
-global delay := 20
+Process, Priority, , A
 
 GetSpecialKeycode(key) {
 	; 返回对应于 key 的只被游戏识别但不影响打字的 keycode
@@ -19,8 +20,9 @@ GetSpecialKeycode(key) {
 }
 
 RobustSend(key) {
+	; 或许用 SetKeyDelay 也可以达成同样的效果
 	Send, {%key% down}
-	Sleep, delay
+	Sleep, duration
 	Send, {%key% up}
 	Sleep, delay
 }
