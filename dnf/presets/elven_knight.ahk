@@ -20,6 +20,12 @@ SetWorkingDir ..
 global smallSkills := [["盾挑", [""], 2], ["盾击", ["Up", "z"], 3], ["盾牌格挡", ["Down", "z"], 1.8], ["致命突刺", ["Up", "Up", "z"], 3]]
 ; 用来叠 C 的小技能, 之所以我盾挑留空是因为我下面触发键 (x & z) 中包含了 z, 所以不需要再在这里写 z 了
 
+global showSkills := True
+; 是否在释放小技能叠 C 后显示放出的技能, 通常用于 debug
+
+global smallSkillsCount := 2
+; 释放小技能的次数
+
 global keyJianDun := "Space"
 ; 剑盾猛攻按键
 
@@ -48,14 +54,19 @@ for _, v in smallSkills {
     v[3] := v[3] * 1000 + 100  ; 补正冷却时间 (s -> ms, 然后加上一点冗余量)
 }
 
+global fireLastJianDun := True
+
 for k, v in skillDelay {
     fn := Func("JianDunAfter").Bind(v)
     Hotkey, $~*%k%, %fn%
 }
 
 JianDunAfter(delay) {
-    fn := Func("RobustSend").Bind(keycodeJianDun)
-    SetTimer, % fn, % -delay
+    Sleep, delay
+    if (fireLastJianDun) {
+        RobustSend(keycodeJianDun)
+    }
+    fireLastJianDun := True
 }
 
 ; 自动叠C快捷键 (此处为同时按x和z时触发)
@@ -76,17 +87,25 @@ fireSmallSkills() {
                 RobustSend(GetSpecialKeycode(key))
             }
             smallSkillsLastFired[skill[1]] := A_TickCount
-            Sleep, 225 - delay * 1.5  ; 减去 2 个 delay 是因为 RobustSend 本身已经有延迟了
+            Sleep, 225 - delay - duration / 2
+            ; 详细说明:
+            ; AHK 中如果只是 Send {key} 经常会出现发不出去的情况
+            ; 一个 workaround 是 Send {key down}; Sleep duration; Send {key up}; Sleep delay;
+            ; 这部分具体实现见 common_pre.ahk
+            ; 这导致技能实际是在 (now-delay-duration, now-delay) 这个区间就放出来了
+            ; 相应的, 这里 Sleep 的时间也应该把这部分时间考虑进去, 满足从技能释放之后算起有 225ms 的间隔
             RobustSend(keycodeJianDun)
             fired += 1
             usedSkills .= skill[1] . " "
         }
-        if (fired == 2) {
-            ; 已经放了2个了
-            Break
-        }    
+        if (fired == smallSkillsCount) {
+            ; 放完了, 结束
+            break
+        }
     }
-    ToolTip1s(usedSkills)
+    if (showSkills) {
+        ToolTip1s(usedSkills)
+    }
 }
 
 #Include lib\common_post.ahk
