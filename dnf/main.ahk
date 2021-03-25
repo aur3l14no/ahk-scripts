@@ -43,7 +43,7 @@ ApplyPreset(toggleKey) {
 		}
 		else {
 			if (processes[k].Length() == 0) {
-				if (InStr(v[2], ",")) {
+				if (not Instr(v[2], ".ahk")) {
 					; 常规连发
 					for _, keys in StrSplit(v[2], ";") {
 						processes[k].push(new MyProcess("lib\autofire.ahk", keys))
