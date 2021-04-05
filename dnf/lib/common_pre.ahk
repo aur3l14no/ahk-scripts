@@ -21,9 +21,9 @@ GetSpecialKeycode(key) {
 
 RobustSend(key) {
 	; 或许用 SetKeyDelay 也可以达成同样的效果
-	Send, {%key% down}
+	Send, {Blind}{%key% down}
 	Sleep, duration
-	Send, {%key% up}
+	Send, {Blind}{%key% up}
 	Sleep, delay
 }
 
