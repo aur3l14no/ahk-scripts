@@ -12,8 +12,6 @@ SetWorkingDir ..
 
 #Include lib\common_pre.ahk
 
-#IfWinActive ahk_exe DNF.exe
-
 arg_1 = %1%
 global keys := arg_1
 
@@ -22,11 +20,13 @@ if (keys != "") {
 }
 
 SetAutofire(keys) {
+	Hotkey, IfWinActive, ahk_exe DNF.exe
 	for _, key in StrSplit(keys, ",") {
 		keycode := GetSpecialKeycode(key)  ; 提前算好 keycode, 以提高连发的速度
 		fn := Func("OnSelfAutofireKeyPressed").Bind(key, keycode)
 		Hotkey, $~*%key%, %fn%
 	}
+	Hotkey, If
 }
 
 OnSelfAutofireKeyPressed(key, keycode) {
@@ -35,7 +35,5 @@ OnSelfAutofireKeyPressed(key, keycode) {
 		RobustSend(keycode)
 	}
 }
-
-#IfWinActive
 
 #Include lib\common_pre.ahk
