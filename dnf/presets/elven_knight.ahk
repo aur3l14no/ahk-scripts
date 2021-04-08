@@ -61,13 +61,15 @@ JianDunAfter(delay) {
     free := True
 }
 
-; 自动叠C快捷键 (此处为同时按x和z时触发)
+; 自动叠C
 z::
-    if (free) {
-        free := False
-        fireSmallSkills()
+    while (GetKeyState("z", "P")) {
+        if (free) {
+            free := False
+            fireSmallSkills()
+        }
+        free := True
     }
-    free := True
     return
 
 fireSmallSkills() {
