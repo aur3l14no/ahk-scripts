@@ -23,7 +23,7 @@ global smallSkills := [["盾挑", ["z"], 2], ["盾击", ["Up", "z"], 3], ["盾�
 global showSkills := True
 ; 是否在释放小技能叠 C 后显示放出的技能, 通常用于 debug
 
-global smallSkillsDelay := [190, 195]
+global smallSkillsDelay := [190, 190]
 ; 小技能叠C后的延迟 (另外数组的长度即小技能的释放个数)
 
 global keyJianDun := "Space"
@@ -63,13 +63,11 @@ JianDunAfter(delay) {
 
 ; 自动叠C
 z::
-    while (GetKeyState("z", "P")) {
-        if (free) {
-            free := False
-            fireSmallSkills()
-        }
-        free := True
+    if (free) {
+        free := False
+        fireSmallSkills()
     }
+    free := True
     return
 
 fireSmallSkills() {
