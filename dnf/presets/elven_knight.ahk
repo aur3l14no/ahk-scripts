@@ -17,19 +17,19 @@ SetWorkingDir ..
 
 ; ==================== Customization Begin ====================
 
-global smallSkills := [["盾挑", [""], 2], ["盾击", ["Up", "z"], 3], ["盾牌格挡", ["Down", "z"], 1.8], ["鹿", ["Up", "Up", "z"], 5.6], ["突刺", ["Down", "Down", "z"], 2.8]]
-; 用来叠 C 的小技能, 之所以我盾挑留空是因为我下面触发键 (z) 中包含了 z, 所以不需要再在这里写 z 了
+global smallSkills := [["盾挑", ["z"], 2], ["盾击", ["Up", "z"], 3], ["盾牌格挡", ["Down", "z"], 1.8], ["鹿", ["Up", "Up", "z"], 5.6], ["突刺", ["Down", "Down", "z"], 2.8], ["命运之轮", ["Up", "Down", "z"], 7.5], ["审判之盾", ["Down", "Up", "z"], 6.6]]
+; 用来叠 C 的小技能
 
 global showSkills := True
 ; 是否在释放小技能叠 C 后显示放出的技能, 通常用于 debug
 
-global smallSkillsDelay := [180, 195]
+global smallSkillsDelay := [190, 195]
 ; 小技能叠C后的延迟 (另外数组的长度即小技能的释放个数)
 
 global keyJianDun := "Space"
 ; 剑盾猛攻按键
 
-global skillDelay := {"a": 220, "s": 220, "d": 275, "f": 220, "g": 740, "w": 740, "e": 740, "t": 740, "v": 275, "tab": 740}
+global skillDelay := {"a": 220, "s": 220, "d": 275, "f": 220, "g": 740, "w": 740, "e": 740, "r": 730, "t": 740, "v": 275, "tab": 740}
 ; 例如我 a 键是破武之轮, 希望在该技能释放后 225ms 按剑盾, 就设置 "a": 225
 ; 其他技能可以参考 https://bbs.colg.cn/thread-8027274-1-1.html, https://bbs.colg.cn/thread-7479247-1-1.html
 
@@ -62,7 +62,7 @@ JianDunAfter(delay) {
 }
 
 ; 自动叠C快捷键 (此处为同时按x和z时触发)
-~z::
+z::
     if (free) {
         free := False
         fireSmallSkills()

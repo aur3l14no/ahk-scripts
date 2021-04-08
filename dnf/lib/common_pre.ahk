@@ -5,7 +5,6 @@
 ; ==================== 说明结束 ====================
 
 #Include config.ahk
-#KeyHistory 0
 ListLines, Off
 SetBatchLines, -1
 SetKeyDelay, -1, -1

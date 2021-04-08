@@ -11,10 +11,10 @@ global delay := 2
 
 global presets := { "F5": ["基本", "x,a,q"]
                   , "F6": ["力法/剑影/剑魂", "x;a;z,f,g,q,w,e,t,y"]
-                  , "F7": ["DK", "x,a,s,d,f,g,e,r,t"]
-                  , "F8": ["精灵骑士", "presets\elven_knight.ahk"]
-                ;   , "F9": ["剑魂 (PK)", "x;z;a,d,f,g,v,b,q,e,r,t"]
-                ;   , "F10": ["鹦鹉 (PK)", "x;z;a,s,d,f,g,v,b,w,e,r,t,y,tab"]
+                  , "F7": ["精灵骑士", "presets\elven_knight.ahk"]
+                  ; , "F8": ["DK", "x,a,s,d,f,g,e,r,t"]
+                  ; , "F9": ["剑魂 (PK)", "x;z;a,d,f,g,v,b,q,e,r,t"]
+                  ; , "F10": ["鹦鹉 (PK)", "x;z;a,s,d,f,g,v,b,w,e,r,t,y,tab"]
                   , "F10": ["鼠标连点", "presets\click.ahk"]}
 
-global defaultPreset = "F8"
+global defaultPreset = "F7"
