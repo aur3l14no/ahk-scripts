@@ -66,12 +66,14 @@ MyToolTip() {
 }
 
 
-<^<#<!k::launchOrFocus("Firefox.exe", "Firefox.exe")
-<^<#<!i::launchOrFocus("WindowsTerminal.exe", "WindowsTerminal.exe")
-<^<#<!b::launchOrFocus("Code.exe", "Code.exe")
+CapsLock & k::launchOrFocus("Firefox.exe", "Firefox.exe")
+CapsLock & i::launchOrFocus("WindowsTerminal.exe", "WindowsTerminal.exe")
+CapsLock & b::launchOrFocus("Code.exe", "Code.exe")
 
 
-<^<#<!u::moveWindow("center")
-<^<#<!h::moveWindow("left")
-<^<#<!l::moveWindow("right")
-<^<#<!Enter::moveWindow("fullscreen")
+CapsLock & u::moveWindow("center")
+CapsLock & h::moveWindow("left")
+CapsLock & l::moveWindow("right")
+CapsLock & Enter::moveWindow("fullscreen")
+
+CapsLock:: Send, {Alt Down}{Shift Down}{Shift Up}{Alt Up}
